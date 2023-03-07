@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
+
+@font-face {
+    font-family: 'OAGothic-ExtraBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+}
+
+body{
+    font-family: 'OAGothic-ExtraBold';
+}
+
+.sentence {
+    font-weight: 700;
+    /* text-align: center; */
+    text-decoration: line-through;
+    text-decoration: underline;
+
+    line-height: 2;
+
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.font-import {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.noonnu_font{
+    font-family: 'OAGothic-ExtraBold';
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}

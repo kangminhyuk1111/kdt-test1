@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>day5</title>
+    <style>
+        .item{
+            transform: skewY(30deg);
+            transition: 1s;
+            z-index: 0;
+        }
+        .item:hover {
+            transform: skew(0deg);
+            z-index: 999;
+        }
+        .item1{
+            position: absolute;
+            top: 300px;
+            left: 300px;
+        }
+        .item2{
+            position: absolute;
+            top: 300px;
+            left: 200px;
+        }
+        .item3{
+            position: absolute;
+            top: 300px;
+            left: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="item item1">
+        <img src="../img/dog.jpg" />
+    </div>
+    <div class="item item2">
+        <img src="../img/dog.jpg" />
+    </div>
+    <div class="item item3">
+        <img src="../img/dog.jpg" />
+    </div>
+</body>
+</html>

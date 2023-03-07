@@ -1,0 +1,27 @@
+.box {
+    display: inline-block;
+    width: 800px;
+    height: 500px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    background-image: url(https://item.kakaocdn.net/do/d84248170c2c52303db27306a00fb861f604e7b0e6900f9ac53a43965300eb9a);
+}
+
+.background {
+    background-color: aqua;
+    background: palegreen;
+    background: linear-gradient(to bottom, #aaa, #222);
+}
+
+.bg {
+    background-repeat: repeat-x;
+    background-position: center;
+}
+
+.bg1{
+
+}
+
+.bg2{
+
+}
