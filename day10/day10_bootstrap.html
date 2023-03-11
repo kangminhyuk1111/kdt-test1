@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+        width: 100%;
+        height: 100px;
+        background-color: black;
+      }
+
+      /* min-wid는 위에서부터 */
+      /* max-wid는 밑에서부터 */
+
+      @media screen and (max-width: 768px) {
+        /* min-width: 최소 넓이 768px */
+        /* ma-width: 768px 이하에서*/
+        div {
+          background-color: yellow;
+        }
+      }
+
+      @media screen and (max-width: 576px) {
+        /* min-width: 최소 넓이 576px */
+        /* max-width: 576px 이하에서*/
+        div {
+          background-color: red;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div></div>
+  </body>
+</html>

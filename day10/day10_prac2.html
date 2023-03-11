@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://kit.fontawesome.com/380ea9da17.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      ul,
+      ol {
+        list-style: none;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        width: 100%;
+        height: 100px;
+        background-color: blueviolet;
+        color: white;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .container .logo {
+        padding-left: 40px;
+      }
+
+      .container ul {
+        display: flex;
+        margin: 30px;
+      }
+
+      .container ul li {
+        padding: 10px;
+      }
+
+      .container .burger {
+        display: none;
+      }
+
+      .outer_menu {
+        width: 100%;
+        height: 300px;
+        background-color: rgb(198, 139, 253);
+        display: none;
+      }
+
+      .outer_menu_ul {
+        margin: 0;
+        padding: 10px;
+      }
+
+      .outer_menu_ul li {
+        padding: 25px;
+      }
+
+      @media screen and (max-width: 992px) {
+        .container .menu {
+          display: none;
+        }
+        .container .burger {
+          display: block;
+          font-size: 30px;
+        }
+        .outer_menu {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <h1>Logo</h1>
+        </div>
+        <ul class="menu">
+          <li>메뉴1</li>
+          <li>메뉴2</li>
+          <li>메뉴3</li>
+          <li>메뉴4</li>
+        </ul>
+        <ul class="burger">
+          <i class="fa-solid fa-bars"></i>
+        </ul>
+      </div>
+      <div class="outer_menu">
+        <ul class="outer_menu_ul">
+          <li>메뉴1</li>
+          <li>메뉴2</li>
+          <li>메뉴3</li>
+          <li>메뉴4</li>
+        </ul>
+      </div>
+    </header>
+  </body>
+</html>

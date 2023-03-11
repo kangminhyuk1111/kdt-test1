@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .flex {
+        display: flex;
+      }
+      .flex div {
+        background-color: black;
+        width: 100px;
+        height: 100px;
+        border: 1px solid red;
+        border-radius: 10%;
+        margin: 10px;
+      }
+
+      @media screen and (max-width: 700px) {
+        .flex {
+          display: block;
+        }
+
+        .flex div {
+          background-color: skyblue;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flex">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </body>
+</html>
