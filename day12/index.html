@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=4, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        height: 2000px;
+      }
+      .btn {
+        width: 80px;
+        height: 35px;
+        border-radius: 13px;
+        text-align: center;
+        line-height: 35px;
+        font-weight: 700;
+        margin: 10px;
+        cursor: pointer;
+      }
+
+      .btn_black {
+        background-color: rgb(44, 44, 44);
+        color: #fff;
+      }
+
+      .btn_green {
+        background-color: green;
+        color: yellow;
+      }
+
+      .btn_blue {
+        background-color: rgb(73, 73, 255);
+        color: bisque;
+      }
+
+      .btn_red {
+        background-color: orangered;
+        color: #fff;
+      }
+
+      .pos {
+        width: 150px;
+        height: 150px;
+        position: fixed;
+        bottom: 300px;
+        transition: 2s;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="btn btn_black">버튼1</div>
+    <div class="btn btn_green">버튼2</div>
+    <div class="btn btn_blue">버튼3</div>
+    <div class="btn btn_red">버튼4</div>
+    <div id="container"></div>
+
+    <input type="text" class="inputs" />
+    <!-- <div class="btn btn_red pos">안녕하세요</div> -->
+
+    <h1>ToDo List</h1>
+    <form id="todo-form">
+      <input type="text" name="todo" />
+      <button type="submit">ADD</button>
+    </form>
+
+    <ul class="todos"></ul>
+
+    <h2>변경 이벤트</h2>
+    <input type="text" id="change-input" />
+    <div class="intro"></div>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
