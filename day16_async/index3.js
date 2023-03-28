@@ -104,6 +104,7 @@ bgred()
     })
 */
 
+/*
 const changeBgColor = (newColor) => {
     return new Promise((res, rej) => {
         setTimeout(() => {
@@ -126,3 +127,5 @@ changeBgColor('red')
     .then(() => {
         return changeBgColor('blue');
     })
+
+    */
