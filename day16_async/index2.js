@@ -136,7 +136,7 @@ function sub(n) {
         setTimeout(function () {
             let result = n - 1;
             if (result > 20) {
-                console.log(result + " great!!!")
+                resolve(result + " great!!!")
             } else {
                 reject(new Error("걍 에러 띄워봄"));
             }
