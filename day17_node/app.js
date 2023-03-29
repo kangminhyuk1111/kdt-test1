@@ -18,12 +18,24 @@ app.get('/', (req, res) => {
 
 app.get('/getForm', (req, res) => {
     console.log(req.query);
-    res.send('get요청 성공 !');
+    res.render('result', {
+        title: 'GET 요청 폼 결과 확인하기',
+        user: {
+            id: req.query.id,
+            pw: req.query.pw
+        }
+    })
 })
 
 app.post('/postForm', (req, res) => {
     console.log(req.body);
-    res.send('POST요청 성공')
+    res.render('result', {
+        title: 'POST 요청 폼 결과 확인하기',
+        user: {
+            id: req.body.id,
+            pw: req.body.pw
+        }
+    })
 })
 
 app.listen(PORT, () => {
