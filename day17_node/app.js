@@ -13,7 +13,43 @@ app.use(express.json()); // json 형태로 데이터를 주고 받음
 app.get('/', (req, res) => {
     // views의 index.ejs를 찾아서 응답
     const myTitle = '폼 실습을 합시다 !!';
-    res.render('index', { title: myTitle });
+    res.render('form', { title: myTitle });
+})
+
+app.get('/postForm', (req, res) => {
+    res.render('form2')
+})
+
+app.get('/getUserData', (req, res) => {
+    console.log(req.query)
+    res.render('formResult', {
+        title: "실습1 get 전송 완료",
+        userName: req.query.userName,
+        sex: req.query.sex,
+        year: req.query.year,
+        month: req.query.month,
+        day: req.query.day,
+        hobby: req.query.hobby,
+        color: req.query.color,
+        number: req.query.number
+    }
+    )
+})
+
+app.post('/postUserData', (req, res) => {
+    console.log(req.body)
+    res.render('formResult', {
+        title: "실습2 post 전송 완료 !",
+        userName: req.body.userName,
+        sex: req.body.sex,
+        year: req.body.year,
+        month: req.body.month,
+        day: req.body.day,
+        hobby: req.body.hobby,
+        color: req.body.color,
+        number: req.body.number
+    }
+    )
 })
 
 app.get('/getForm', (req, res) => {

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>폼 전송</title>
+  </head>
+  <body>
+    <h1>실습 get으로 정보 받기</h1>
+    <form action="/getUserData" name="userData" method="get">
+      <input type="text" name="userName" id="userName" />
+      <fieldset>
+        <legend>성별</legend>
+        <label for="man">남자</label>
+        <input type="radio" name="sex" value="남자" id="man" />
+        <label for="women">여자</label>
+        <input type="radio" name="sex" value="여자" id="women" />
+      </fieldset>
+      <fieldset>
+        <legend>생년월일</legend>
+        <select name="year" id="year"></select
+        >년
+        <select name="month" id="month"></select
+        >월
+        <select name="day" id="day"></select
+        >일
+      </fieldset>
+      <fieldset>
+        <legend>관심사</legend>
+        <input type="checkbox" name="hobby" id="travel" value="여행" />
+        <label for="travel">여행</label>
+        <input type="checkbox" name="hobby" id="travel" value="패션" />
+        <label for="fashion">패션</label>
+        <input type="checkbox" name="hobby" id="food" value="음식" />
+        <label for="food">음식</label>
+      </fieldset>
+      <button type="submit">회원가입</button>
+    </form>
+    <script>
+      const year = document.querySelector("#year");
+      const month = document.querySelector("#month");
+      const day = document.querySelector("#day");
+      const date = new Date();
+      console.log(date.getFullYear());
+      console.log(date.getMonth());
+      console.log(date.getDay());
+      for (let i = 1960; i < date.getFullYear() + 1; i++) {
+        let option = document.createElement("option");
+        option.setAttribute("value", i);
+        option.innerHTML = i;
+        year.appendChild(option);
+      }
+      for (let i = 1; i < 13; i++) {
+        let option = document.createElement("option");
+        option.setAttribute("value", i);
+        option.innerHTML = i;
+        month.appendChild(option);
+      }
+      for (let i = 1; i < 32; i++) {
+        let option = document.createElement("option");
+        option.setAttribute("value", i);
+        option.innerHTML = i;
+        day.appendChild(option);
+      }
+    </script>
+  </body>
+</html>
