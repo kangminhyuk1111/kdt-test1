@@ -1,28 +1,40 @@
 const express = require('express');
+const { spawn } = require('child_process');
 const app = express();
 
-const PORT = 8080;
-
 app.set('view engine', 'ejs');
-app.set('/views', 'views');
-app.use('/static', express.static(__dirname + '/static'))
+app.use('/views', express.static(__dirname + '/views'));
 
-app.get('/', function (request, response) {
-    response.render('test');
-    // response.send('<h1>hello express</h1>');
+app.get('/', (req, res) => {
+    res.render('get')
 })
 
-app.get('/login', function (req, res) {
-    res.render('login');
-})
+app.get('/run-python', (req, res) => {
 
-app.get('/login/register', function (req, res) {
-    res.render('register');
-})
+    // Python 스크립트 경로
+    const pythonScriptPath = './test.py';
 
-// request 클라이언트가 서버에게 보내는 요청
-// response 서버가 클라이언트에게 보내는 응답
+    // Python 프로세스 생성
+    const pythonProcess = spawn('python', [pythonScriptPath]);
 
-app.listen(PORT, () => {
-    console.log(`SERVER IS RUNNING ${PORT}`);
-})
+    // Python 프로세스에서 stdout, stderr 데이터를 읽을 때마다 실행되는 이벤트 핸들러 등록
+    pythonProcess.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`);
+        // res.send(`stdout: ${data}`)
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+    });
+
+    // Python 프로세스 종료 이벤트 핸들러 등록
+    pythonProcess.on('close', (code) => {
+        console.log(`Python script 종료 코드: ${code}`);
+    });
+
+    // res.send('Python 스크립트 실행 중...');
+});
+
+app.listen(3000, () => {
+    console.log('Express 서버가 3000 포트에서 실행 중입니다.');
+});

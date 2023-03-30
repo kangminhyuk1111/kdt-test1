@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 8000;
 
+
 app.set('view engine', 'ejs'); // view engine 등록
 app.use('/views', express.static(__dirname + '/views'));
 app.use(express.urlencoded({ extends: true })) // post요청으로 들어오는 모든 형식의 데이터를 파싱
