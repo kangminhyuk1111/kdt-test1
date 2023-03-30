@@ -10,6 +10,12 @@ app.get('/', (req, res) => {
 })
 
 app.get('/run-python', (req, res) => {
+    let memberNumber = req.query.memberNumber;
+    let memberPassword = req.query.memberPassword;
+    let dep = req.query.dep;
+    let arr = req.query.arr;
+    let date = req.query.date;
+    let time = req.query.time;
 
     // Python 스크립트 경로
     const pythonScriptPath = './test.py';
