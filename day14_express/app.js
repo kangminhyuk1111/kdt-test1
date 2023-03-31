@@ -16,21 +16,22 @@ app.get('/run-python', (req, res) => {
     let arr = req.query.arr;
     let date = req.query.date;
     let time = req.query.time;
+    let zero = 0;
 
     // Python 스크립트 경로
     const pythonScriptPath = './test.py';
 
     // Python 프로세스 생성
-    const pythonProcess = spawn('python', [pythonScriptPath]);
+    const pythonProcess = spawn('python', [pythonScriptPath, memberNumber, memberPassword, dep, arr, date, time, zero]);
 
     // Python 프로세스에서 stdout, stderr 데이터를 읽을 때마다 실행되는 이벤트 핸들러 등록
     pythonProcess.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
-        // res.send(`stdout: ${data}`)
+        res.send(data.toString())
+        console.log(`stdout: ${data}`)
     });
 
     pythonProcess.stderr.on('data', (data) => {
-        console.error(`stderr: ${data}`);
+        console.error(`stderr: ${data.toString()}`);
     });
 
     // Python 프로세스 종료 이벤트 핸들러 등록

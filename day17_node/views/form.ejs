@@ -5,10 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>폼 전송</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <h1>실습 get으로 정보 받기</h1>
-    <form action="/getUserData" name="userData" method="get">
+    <form name="userData">
       <input type="text" name="userName" id="userName" />
       <fieldset>
         <legend>성별</legend>
@@ -63,6 +64,25 @@
         option.innerHTML = i;
         day.appendChild(option);
       }
+
+      const form = document.forms["userData"];
+
+      const formInfo = {
+        userName: form.userName.value,
+        sex: form.sex.value,
+        year: form.year.value,
+        month: form.month.value,
+        day: form.day.value,
+        hobby: form.hobby.value,
+      };
+
+      const axiosGet = async () => {
+        const data = await axios({
+          method: "GET",
+          url: "/axiosGet",
+          params: formInfo,
+        });
+      };
     </script>
   </body>
 </html>

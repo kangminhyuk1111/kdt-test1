@@ -6,22 +6,25 @@ sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
 # 2196982283 , rkdglqkr12@
 
-srt = SRT("2196982283", "rkdglqkr12@")
-dep = '수서' # 출발
-arr = '동대구' # 도착
-date = '20230330' # 날짜 (yyyymmdd)
-time = '175000' # 시간 (HHMMSS)
-
+def getUserData(memberNumber,memberPassword,dep,arr,date,time,zero):
+    srt = SRT(f"{memberNumber}", f"{memberPassword}")
+    dep = f"{dep}" # 출발
+    arr = f"{arr}" # 도착
+    date = f"{date}" # 날짜 (yyyymmdd)
+    time = f"{time}" # 시간 (HHMMSS)
+    trains = srt.search_train(dep, arr, date, time, available_only=False)
+    print(trains)
 # 기차 검색
+# sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6]
 
-trains = srt.search_train(dep, arr, date, time, available_only=False)
-print(trains)
+if __name__ == "__main__":  
+    getUserData(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7])
 
 # 결과 :  [[SRT] 11월 06일, 수서~부산(20:00~22:23) 특실 매진, 일반실 .....
 
-import time
-flag = False
-i = 0
+# import time
+# flag = False
+# i = 0
 
 # import time
 # import sys

@@ -5,16 +5,72 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <form action="/run-python" name="userData" method="get">
+    <form name="userData">
+      <label for="memberNumber">회원번호</label>
       <input type="text" name="memberNumber" id="memberNumber" />
+      <br />
+      <label for="memberPassword">비밀번호</label>
       <input type="text" name="memberPassword" id="memberPassword" />
+      <br />
+      <label for="dep">출발역</label>
       <input type="text" name="dep" id="dep" />
+      <br />
+      <label for="arr">도착역</label>
       <input type="text" name="arr" id="arr" />
+      <br />
+      <label for="date">날짜</label>
       <input type="text" name="date" id="date" />
+      <br />
+      <label for="time">시간</label>
       <input type="text" name="time" id="time" />
-      <button type="submit">제출</button>
+      <br />
+      <button type="button" onclick="getPyData();">제출</button>
     </form>
+    <ul class="getPyResult"></ul>
+    <script>
+      const forms = document.forms["userData"];
+      const getPyResult = document.querySelector(".getPyResult");
+
+      const sendListData = (i) => {
+        alert(i);
+      };
+
+      async function getPyData() {
+        const formInfo = {
+          memberNumber: forms.memberNumber.value,
+          memberPassword: forms.memberPassword.value,
+          dep: forms.dep.value,
+          arr: forms.arr.value,
+          date: forms.date.value,
+          time: forms.time.value,
+        };
+        getPyResult.innerHTML = "";
+        try {
+          const srtData = await axios({
+            url: "/run-python",
+            method: "GET",
+            params: formInfo,
+          });
+          let slicingDataArr = srtData.data
+            .slice(1)
+            .slice(0, -3)
+            .split("[SRT]");
+          for (let i = 1; i < slicingDataArr.length; i++) {
+            let li = document.createElement("li");
+            let btn = document.createElement("button");
+            btn.setAttribute("onclick", `sendListData(${i});`);
+            btn.innerHTML = "예약하기";
+            li.append(slicingDataArr[i]);
+            li.append(btn);
+            getPyResult.append(li);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    </script>
   </body>
 </html>
