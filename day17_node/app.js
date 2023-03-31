@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const { spawn } = require('child_process');
 const PORT = 8000;
 
 
@@ -14,7 +15,7 @@ app.use(express.json()); // json 형태로 데이터를 주고 받음
 app.get('/', (req, res) => {
     // views의 index.ejs를 찾아서 응답
     const myTitle = '폼 실습을 합시다 !!';
-    res.render('form', { title: myTitle });
+    res.render('test', { title: myTitle });
 })
 
 app.get('/postForm', (req, res) => {
@@ -74,6 +75,28 @@ app.post('/postForm', (req, res) => {
         }
     })
 })
+
+app.get('/function1', (req, res) => {
+    const a = req.query.a;
+    const pythonProcess = spawn('python', ['./mymodule.py', '-c', `from mymodule import my_function; print(my_function(${a}))`]);
+    pythonProcess.stdout.on('data', (data) => {
+        const result = data.toString();
+        const parsedResult = parseInt(result);
+        res.locals.parsedResult = parsedResult;
+        next();
+    });
+});
+
+app.get('/function2', (req, res) => {
+    const b = req.query.b;
+    const pythonProcess = spawn('python', ['./mymodule.py', '-c', `from mymodule import my_function; print(my_function(${b}))`]);
+    pythonProcess.stdout.on('data', (data) => {
+        const result = data.toString();
+        const parsedResult = parseInt(result);
+        res.locals.parsedResult2 = parsedResult;
+        res.send({ result1: res.locals.parsedResult, result2: res.locals.parsedResult2 });
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`SERVER RUN IN http://localhost:${PORT}`);
