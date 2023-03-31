@@ -34,8 +34,16 @@
       const forms = document.forms["userData"];
       const getPyResult = document.querySelector(".getPyResult");
 
-      const sendListData = (i) => {
-        alert(i);
+      const sendListData = async (i) => {
+        try {
+          const data = await axios({
+            url: "/arrNum",
+            method: "GET",
+            params: { arrNum: i },
+          });
+        } catch (err) {
+          console.log(err);
+        }
       };
 
       async function getPyData() {
