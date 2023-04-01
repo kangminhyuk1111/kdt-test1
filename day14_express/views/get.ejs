@@ -35,6 +35,7 @@
       const getPyResult = document.querySelector(".getPyResult");
 
       const sendListData = async (i) => {
+        alert(i);
         try {
           const data = await axios({
             url: "/arrNum",

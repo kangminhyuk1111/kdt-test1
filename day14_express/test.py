@@ -1,6 +1,7 @@
 from SRT import SRT
 import sys
 import io
+
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
@@ -21,16 +22,15 @@ def getUserData(memberNumber,memberPassword,dep,arr,date,time):
     trains = srt.search_train(depRe, arrRe, dateRe, timeRe, available_only=False)
     print(trains)
 
-def reservationSRTrain(getArrNum : int):
-    reservation = srt.reserve(trains[0])
+def reservationSRTrain(getArrNum: int):
+    global trains
+    reservation = srt.reserve(trains[getArrNum])
     print(reservation)
-    sys.stdout.flush()
 # 기차 검색
 # sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6]
 
 if __name__ == "__main__":  
     getUserData(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6])
-
 # 결과 :  [[SRT] 11월 06일, 수서~부산(20:00~22:23) 특실 매진, 일반실 .....
 
 # import time
