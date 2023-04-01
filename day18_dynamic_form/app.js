@@ -8,7 +8,7 @@ app.use(express.urlencoded({ extends: true }));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.render('form')
+    res.render('index')
 })
 
 app.get('/ajax', (req, res) => {
@@ -44,6 +44,16 @@ app.post('/registerPost', (req, res) => {
     } else if (req.body.id != appId || req.body.pw != appPw) {
         res.send({ text: "아이디 또는 비밀번호 오류", color: 'red' })
     }
+})
+
+app.get('/fetch', (req, res) => {
+    console.log(req.query);
+    res.send(req.query);
+})
+
+app.post('/fetch', (req, res) => {
+    console.log(req.body)
+    res.send(req.body)
 })
 
 app.listen(PORT, () => {
