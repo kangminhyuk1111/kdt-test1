@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>파일 업로드</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
 
   <body>
@@ -15,6 +16,38 @@
       <input type="file" name="userfile" /><br />
       <input type="text" name="title" /><br />
       <button type="submit">업로드</button>
+    </form>
+
+    <form action="/upload/array" method="POST" enctype="multipart/form-data">
+      <input type="file" name="userfile" multiple /><br />
+      <input type="text" name="title" /><br />
+      <button type="submit">업로드</button>
+    </form>
+
+    <form action="/upload/fields" method="POST" enctype="multipart/form-data">
+      <input type="file" name="userfile1" /><br />
+      <input type="text" name="title1" /><br />
+      <input type="file" name="userfile2" /><br />
+      <input type="text" name="title2" /><br />
+      <button type="submit">업로드</button>
+    </form>
+    <hr />
+    <h1>개인정보</h1>
+    <form action="/upload/userData" method="POST" enctype="multipart/form-data">
+      <label for="id">아이디</label>
+      <input type="text" name="id" id="id" /><br />
+      <label for="pw">비밀번호</label>
+      <input type="password" name="pw" id="pw" /><br />
+      <label for="userName">이름</label>
+      <input type="text" name="userName" id="userName" /><br />
+      <label for="age">나이</label>
+      <input type="number" name="age" id="age" /><br />
+      <label for="userfile">프로필사진</label>
+      <input type="file" name="userfile" id="userfile" /><br />
+      <button type="button">리셋</button>
+      <button type="submit">업로드</button>
+      <div class="imgResult"></div>
+      <script></script>
     </form>
   </body>
 </html>
