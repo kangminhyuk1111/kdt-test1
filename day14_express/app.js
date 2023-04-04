@@ -33,23 +33,35 @@ app.get('/run-python', (req, res) => {
         console.error(`stderr: ${data.toString()}`);
     });
 
-
+    pythonProcess.on('close', (code) => {
+        console.log(`Python script 종료 코드: ${code}`);
+    });
 });
 
+console.log('>>>>>>', pythonProcess)
+
 app.get('/arrNum', (req, res) => {
-    let getArrNum = req.query.arrNum;
-    console.log(getArrNum)
-    if (pythonProcess) {
-        pythonProcess.stdin.write(`reservationSRTrain(${getArrNum})\n`);
-        pythonProcess.stdout.once('data', (data) => {
-            const result = data.toString();
-            console.log(`stdout : ${data}`)
-            console.log(`stdout : ${result}`)
-        });
-    } else {
-        console.error('Python process is not running.');
-    }
-    console.log('err')
+    let psp = pythonProcess.spawnargs
+    console.log(psp)
+    // let getArrNum = req.query.arrNum;
+    let pythonProcess2 = spawn('python', ['-u', 'test2.py', psp[3], psp[4], psp[5], psp[6], psp[7], psp[8]]);
+    pythonProcess2.stdout.on('data', (data) => {
+        // res.send(data.toString())
+        console.log(`stdout: ${data}`)
+    });
+    // if (pythonProcess) {
+    //     console.log(pythonProcess.spawnargs)
+    //     pythonProcess.stdin.write(`reservationSRTrain(${0})\n`)
+    //     pythonProcess.stdin.end();
+    //     pythonProcess.stdout.on('data', (data) => {
+    //         const result = data.toString();
+    //         console.log(`stdout : ${data}`)
+    //         console.log(`stdout : ${result}`)
+    //     });
+    // } else {
+    //     console.error('Python process is not running.');
+    // }
+    // console.log('!!')
 });
 
 app.listen(3000, () => {
