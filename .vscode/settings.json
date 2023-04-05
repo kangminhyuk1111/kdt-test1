@@ -1,0 +1,5 @@
+{
+  "python.testing.pytestArgs": ["day14_express"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
+}

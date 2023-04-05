@@ -36,28 +36,51 @@ exports.commentId = (req, res) => {
 }
 
 exports.signIn = (req, res) => {
-    let appId = 'banana';
-    let appPw = '4321';
-    if (req.body.id == appId && req.body.pw == appPw) {
+    const userData = User.userLogin();
+    if (req.body.id == userData.id && req.body.pw == userData.pw) {
         res.send({ text: "banana님 로그인 성공 !", color: 'blue' })
-    } else if (req.body.id != appId || req.body.pw != appPw) {
+    } else if (req.body.id != userData.id || req.body.pw != userData.pw) {
         res.send({ text: "아이디 또는 비밀번호 오류", color: 'red' })
     }
 }
 
 exports.users = (req, res) => {
-    console.log(req.body)
     const dataSet = `${req.body.id}//${req.body.pw}//${req.body.name}`
     const userData = User.userData.split("\n");
-    console.log(dataSet)
-    console.log(userData)
-    for (let i = 0; i < userData.length; i++) {
-        if (dataSet == userData[i]) {
-            res.send({ text: `${req.body.name}님 환영합니다 ! 😊`, color: 'blue' })
-        }
-        else {
-            res.send({ text: "아이디 또는 비밀번호가 틀렸어요 ㅜ😢", color: 'red' })
-        }
+    const users = [];
+    const userIds = [];
+    for (let user of userData) {
+        users.push({
+            realId: user.split('//')[0],
+            realPw: user.split('//')[1],
+            realName: user.split('//')[2],
+        })
+        userIds.push(user.split('//')[0])
     }
+    console.log(users)
+    console.log(userIds);
+    console.log(req.body)
 
+    const idx = userIds.indexOf(req.body.id);
+    console.log(idx)
+    if (idx >= 0) {
+        if (users[idx].realPw == req.body.pw) {
+            res.send({ isLogin: true, userInfo: users[idx] });
+        } else {
+            res.send({ isSuccess: false })
+        }
+    } else {
+        res.send({ isSuccess: false })
+    }
+    // console.log(userIds)
+    // console.log(dataSet)
+    // console.log(userData)
+    // for (let i = 0; i < userData.length; i++) {
+    //     if (dataSet == userData[i]) {
+    //         res.send({ text: `${req.body.name}님 환영합니다 ! 😊`, color: 'blue' })
+    //     }
+    //     else {
+    //         res.send({ text: "아이디 또는 비밀번호가 틀렸어요 ㅜ😢", color: 'red' })
+    //     }
+    // }
 }
