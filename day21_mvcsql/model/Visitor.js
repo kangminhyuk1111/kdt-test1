@@ -7,7 +7,7 @@ const conn = mysql.createConnection({
     database: 'codingon'
 })
 
-exports.getVisitor = (cb) => {
+exports.getVisitors = (cb) => {
     // query(sql,callback) => conn에서 저장된 데이터 베이스에 접근해서 sql문 실행
     const sql = `SELECT * FROM visitor;`
     conn.query(sql, (err, rows) => {
@@ -33,19 +33,48 @@ exports.postVisitor = (data, callback) => {
     })
 }
 
-exports.deleteVisitor = (data, callback) => {
-    console.log(data);
-    const sql = `delete from visitor where id = ${data.idx}`;
+exports.deleteVisitor = (id, callback) => {
+    console.log(id);
+    const sql = `delete from visitor where id = ${id};`;
 
     conn.query(sql, (err, rows) => {
         if (err) {
             throw err;
         }
 
-        console.log(rows);
-        callback(rows);
+        console.log("row", rows);
+        callback(true);
     })
 }
+
+// exports.patchVisitor = (data, callback) => {
+//     console.log(data)
+// }
+
+exports.getVisitor = (id, callback) => {
+    console.log(id);
+    const sql = `SELECT * FROM visitor WHERE id=${id};`;
+    conn.query(sql, (err, rows) => {
+        if (err) throw err;
+        console.log(rows);
+        callback(rows[0]);
+    })
+}
+
+exports.patchVisitor = (data, callback) => {
+    console.log("nice", data);
+
+    const sql = `update visitor set name='${data.name}', comment='${data.comment}' WHERE id=${data.id}`;
+    conn.query(sql, (err, rows) => {
+        if (err) {
+            throw err;
+        }
+
+        console.log('Visitor.js >>', rows);
+        callback();
+    });
+}
+
 // before
 // exports.getVisitors = () => {
 //     return [

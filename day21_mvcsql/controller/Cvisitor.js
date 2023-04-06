@@ -5,7 +5,7 @@ exports.main = (req, res) => {
 }
 
 exports.getVisitors = (req, res) => {
-    Visitor.getVisitor((result) => {
+    Visitor.getVisitors((result) => {
         console.log('Cvisitor.js >> ', result);
         res.render('visitor', { data: result });
     })
@@ -28,8 +28,27 @@ exports.postVisitor = (req, res) => {
 exports.deleteVisitor = (req, res) => {
     console.log(req.body);
 
-    Visitor.deleteVisitor(req.body, (result) => {
-        console.log("Cvisitor >>> ", result);
-        res.send('삭제완료');
+    Visitor.deleteVisitor(req.body.id, (result) => {
+        res.send({ id: req.body.id });
+    })
+}
+
+// exports.patchVisitor = (req, res) => {
+//     console.log(req.body)
+// }
+
+exports.getVisitor = (req, res) => {
+    console.log(req.query.id);
+    Visitor.getVisitor(req.query.id, (result) => {
+        console.log(result)
+        res.send(result);
+    })
+}
+
+exports.patchVisitor = (req, res) => {
+    console.log(">>>>>" + req.body);
+
+    Visitor.patchVisitor(req.body, (result) => {
+        res.send("수정 완료")
     })
 }

@@ -34,9 +34,16 @@
           <td><%= data[i].id %></td>
           <td><%= data[i].name %></td>
           <td><%= data[i].comment %></td>
-          <td><button type="button">수정</button></td>
           <td>
-            <button type="button" onclick="deleteVisitor('<%=data[i].id%>');">
+            <button type="button" onclick="getVisitor('<%= data[i].id %>')">
+              수정
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              onclick="deleteVisitor(this,'<%=data[i].id%>');"
+            >
               삭제
             </button>
           </td>
@@ -46,6 +53,7 @@
     </table>
     <script>
       const tbody = document.querySelector("tbody");
+      const btnGroup = document.querySelector("#button-group");
 
       const createVisitor = () => {
         const form = document.forms["visitor-form"];
@@ -65,8 +73,8 @@
             <td>${res.data.id}</td>
             <td>${res.data.name}</td>
             <td>${res.data.comment}</td>
-            <td><button type="button">수정</button></td>
-            <td><button type="button">삭제</button></td>
+            <td><button type="button" onclick="getVisitor(${res.data.id})">수정</button></td>
+            <td><button type="button" onclick="deleteVisitor(this,${res.data.id});">삭제</button></td>
           </tr>`;
 
           tbody.insertAdjacentHTML("beforeend", newVisitor);
@@ -75,14 +83,73 @@
           form.comment.value = "";
         });
       };
-      const deleteVisitor = (idx) => {
+
+      const deleteVisitor = (obj, id) => {
+        if (!confirm("정말 삭제 하시겠습니까?")) {
+          return;
+        }
         axios({
           method: "DELETE",
-          url: "visitor/delete",
-          data: { idx: idx },
+          url: "/visitor/delete",
+          data: { id: id },
         }).then((res) => {
-          console.log(res);
+          document.querySelector(`#tr_${res.data.id}`).remove();
         });
+      };
+
+      const getVisitor = (id) => {
+        axios({
+          method: "GET",
+          url: "/visitor/get",
+          params: {
+            id: id,
+          },
+        }).then((res) => {
+          console.log(res.data);
+
+          const form = document.forms["visitor-form"];
+          form.name.value = res.data.name;
+          form.comment.value = res.data.comment;
+
+          const btns = `
+            <button type="button" onclick="editDo(${id})">변경</button>
+            <button type="button" onclick="editCancel()">취소</button>
+          `;
+          btnGroup.innerHTML = btns;
+        });
+
+        // axios({
+        //   method: "PATCH",
+        //   url: "/visitor/edit",
+        //   data: { id: id },
+        // }).then((res) => {
+        //   console.log(res);
+        // });
+      };
+      const editDo = (id) => {
+        const form = document.forms["visitor-form"];
+        axios({
+          method: "PATCH",
+          url: "/visitor/edit",
+          data: {
+            id: id,
+            name: form.name.value,
+            comment: form.comment.value,
+          },
+        }).then((res) => {
+          const children = document.querySelector(`#tr_${id}`).children;
+          children[1].textContent = form.name.value;
+          children[2].textContent = form.comment.value;
+        });
+      };
+
+      const editCancel = () => {
+        const form = document.forms["visitor-form"];
+        form.name.value = "";
+        form.comment.value = "";
+
+        const btn = `<button type="button" onclick="createVisitor();">등록</button>`;
+        btnGroup.innerHTML = btn;
       };
     </script>
   </body>
