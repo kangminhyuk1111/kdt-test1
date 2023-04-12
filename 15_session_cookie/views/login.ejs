@@ -21,23 +21,27 @@
   </head>
   <body>
     <div class="login-box">
-      <h1>로그인</h1>
+      <h2>🔒로그인🔒</h2>
       <p>id : banana , pw: 1234</p>
       <form name="register">
-        <label for="userid">아이디</label>
-        <input type="text" name="userid" id="userid" class="input-group mb-3" />
-        <label for="userpw">비밀번호</label>
-        <input
-          type="password"
-          name="userpw"
-          id="userpw"
-          class="input-group mb-3"
-        />
-        <button type="button" class="btn btn-success" onclick="postUserData();">
+        <div class="input-group mb-3">
+          <span class="input-group-text bg-warning" id="id">ID</span>
+          <input type="text" name="userid" id="userid" class="form-control" />
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text bg-warning" id="pw">PW</span>
+          <input
+            type="password"
+            name="userpw"
+            id="userpw"
+            class="form-control"
+          />
+        </div>
+        <button type="button" class="btn btn-warning" onclick="postUserData();">
           제출
         </button>
         <br />
-        <a href="/">HOME</a>
+        <a href="/" class="btn btn-warning mb-0">HOME</a>
       </form>
     </div>
     <script>
