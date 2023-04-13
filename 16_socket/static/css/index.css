@@ -76,3 +76,7 @@ h1 {
 #footer {
     height: 10%;
 }
+
+#canvas {
+    transition: 1s;
+}

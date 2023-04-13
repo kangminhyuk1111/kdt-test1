@@ -6,6 +6,15 @@ let myNick;
 const chatList = document.querySelector('#chat-list');
 const chatBox = document.querySelector(".chat-box");
 
+const userData = async () => {
+    const result = await axios({
+        method: 'POST',
+        url: '/userData',
+        data: { data: 1 },
+    })
+    console.log(result);
+}
+
 socket.on('connect', () => {
     console.log('⭕️ Client Socket Connected >> ', socket.id);
 });

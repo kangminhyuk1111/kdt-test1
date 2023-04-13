@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/static/css/signin.css" />
+  </head>
+  <body>
+    <h1>회원가입</h1>
+    <form name="register">
+      <input type="text" name="signId" id="signId" required />
+      <input type="password" name="signPw" id="signPw" required />
+      <input type="text" name="signNickname" id="signNickname" required />
+      <input type="file" name="signProfileImg" id="signProfileImg" />
+      <img src="" />
+      <button type="button" onclick="fileUpload();">사진 업로드</button>
+      <button type="button" onclick="registerUser();">회원가입제출</button>
+    </form>
+
+    <script>
+      const forms = document.forms["register"];
+      const fileUpload = () => {
+        const formData = new FormData();
+        const fileInput = document.getElementById("signProfileImg");
+        console.log(fileInput.files[0]);
+
+        formData.append("dynamic-userfile", fileInput.files[0]);
+
+        axios({
+          url: "/dynamicFile",
+          method: "POST",
+          data: formData,
+          headers: {
+            "Content-Type": "multipart/form-data", // enctype="multipart/form-data"
+          },
+        }).then((response) => {
+          console.log(response);
+          let img = document.querySelector("img");
+          img.setAttribute("src", `../uploads/${response.data.filename}`);
+        });
+      };
+
+      const registerUser = async () => {
+        const imgSrc = document.querySelector("img").getAttribute("src");
+        const formData = {
+          signId: forms.signId.value,
+          signPw: forms.signPw.value,
+          signNickname: forms.signNickname.value,
+          signProfileImg: imgSrc,
+        };
+        console.log(formData);
+        const result = await axios({
+          method: "POST",
+          url: "signInUser",
+          data: formData,
+        });
+      };
+    </script>
+  </body>
+</html>
