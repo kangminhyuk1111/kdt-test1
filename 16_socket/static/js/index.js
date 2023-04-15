@@ -1,19 +1,18 @@
 // frontend js
 
+// const sessionUserid = '<%- JSON.stringify(userInfo) %>';
+
 // socket 사용을 위해서 객체 생성
 let socket = io.connect();
 let myNick;
 const chatList = document.querySelector('#chat-list');
 const chatBox = document.querySelector(".chat-box");
-
-const userData = async () => {
-    const result = await axios({
-        method: 'POST',
-        url: '/userData',
-        data: { data: 1 },
-    })
-    console.log(result);
-}
+const now = new Date(); // 현재 시간
+const utcNow = now.getTime() + (now.getTimezoneOffset() * 60 * 1000); // 현재 시간을 utc로 변환한 밀리세컨드값
+const koreaTimeDiff = 9 * 60 * 60 * 1000; // 한국 시간은 UTC보다 9시간 빠름(9시간의 밀리세컨드 표현)
+const koreaNow = new Date(utcNow + koreaTimeDiff); // utc로 변환된 값을 한국 시간으로 변환시키기 위해 9시간(밀리세컨드)를 더함
+const hours = koreaNow.getHours();
+const minutes = koreaNow.getMinutes();
 
 socket.on('connect', () => {
     console.log('⭕️ Client Socket Connected >> ', socket.id);
@@ -46,20 +45,65 @@ socket.on('updateNicks', (obj) => {
 })
 
 socket.on('getMsg', (data) => {
+    let getMsgFinder = allUsers.find(e => e.nickname == data.who);
+    // console.log(allUsers)
+    // console.log(getMsgFinder);
     chatList.scrollTop = chatList.scrollHeight
     if (myNick == data.who) {
         const div1 = document.createElement('div');
         const div2 = document.createElement('div');
+        const div3 = document.createElement('div');
+        const div4 = document.createElement('div');
+        const p1 = document.createElement('p');
+        const p2 = document.createElement('p');
+        const img = document.createElement('img');
         div1.setAttribute("class", 'my-chat');
-        div2.innerHTML = `${data.who} : ${data.msg}`
+        if (getMsgFinder) {
+            img.setAttribute('src', getMsgFinder.profileImg);
+        } else {
+            img.setAttribute('src', '/uploads/shiba-default.jpg');
+        }
+        p1.setAttribute('class', 'mb-0');
+        p1.innerText = data.who;
+        p2.setAttribute('class', 'chatting-box')
+        p2.innerText = data.msg;
+        div3.setAttribute('id', "profile-img");
+        div4.setAttribute('class', 'time-setter');
+        div4.innerText = `${hours}:${minutes}`
+        div2.append(p1)
+        div2.append(p2)
+        div3.append(img)
+        div1.append(div4)
         div1.append(div2)
+        div1.append(div3)
         chatList.append(div1);
     } else if (myNick != data.who) {
         const div1 = document.createElement('div');
         const div2 = document.createElement('div');
+        const div3 = document.createElement('div');
+        const div4 = document.createElement('div');
+        const p1 = document.createElement('p');
+        const p2 = document.createElement('p');
+        const img = document.createElement('img');
         div1.setAttribute("class", 'other-chat');
-        div2.innerHTML = `${data.who} : ${data.msg}`
+        if (getMsgFinder) {
+            img.setAttribute('src', getMsgFinder.profileImg);
+        } else {
+            img.setAttribute('src', '/uploads/shiba-default.jpg');
+        }
+        p1.setAttribute('class', 'mb-0');
+        p1.innerText = data.who;
+        p2.setAttribute('class', 'chatting-box-other')
+        p2.innerText = data.msg;
+        div3.setAttribute('id', "profile-img");
+        div4.setAttribute('class', 'time-setter');
+        div4.innerText = `${hours}:${minutes}`
+        div3.append(img);
+        div2.append(p1)
+        div2.append(p2)
+        div1.append(div3)
         div1.append(div2)
+        div1.append(div4)
         chatList.append(div1);
     }
 
@@ -106,54 +150,57 @@ function entry() {
 }
 
 function sendMsg() {
-    console.log(document.querySelector('#nick-list').value)
-    console.log(document.querySelector('#message').value)
+    if (!document.querySelector('#message').value) {
+        Swal.fire(
+            '실패..',
+            '공백은 전송할 수 없습니다 !',
+            'error'
+        )
+        return;
+    }
     socket.emit('sendMsg', ([document.querySelector('#message').value, document.querySelector('#nick-list').value]));
+    document.querySelector('#message').value = '';
 }
 
-// function sayHello() {
-//     // client -> server 정보 보내기
-//     // socket.emit(event, data): 데이터 "전송"
-//     // => event 라는 이름으로 data를 전송
-//     socket.emit('hello', {
-//         who: 'client',
-//         msg: 'hello',
-//     })
+const userData = async () => {
+    const id = document.querySelector("#loginId").value
+    const pw = document.querySelector("#loginPw").value
+    const result = await axios({
+        method: 'POST',
+        url: '/login',
+        data: {
+            userId: id,
+            userPw: pw,
+        }
+    })
+    if (result.data == true) {
+        Swal.fire({
+            title: '성공 !',
+            text: '로그인 성공 !',
+            icon: 'success',
+            confirmButtonColor: '#ffc107',
+            confirmButtonText: 'OK'
+        }).then(result => {
+            if (result.isConfirmed == true) {
+                window.location.href = '/';
+            }
+        })
+        // window.location.href = "/";
+    } else {
+        Swal.fire(
+            '실패..',
+            '로그인 실패...',
+            'error'
+        )
+    }
+}
 
-//     socket.on('helloKR', (data) => {
-//         const div1 = document.createElement('div');
-//         const div2 = document.createElement('div');
-//         div1.setAttribute("class", 'my-chat');
-//         div2.innerHTML = `${data.who} : ${data.msg}`
-//         div1.append(div2)
-//         chatList.append(div1);
-//     })
-
-
-//     // socket.on(event, callback) : 데이터 "받음"
-//     // event에 대해서 정보를 받아 callback함수 실행
-// }
-
-// function sayStudy() {
-//     socket.emit('study', {
-//         who: 'student',
-//         msg: 'study !!'
-//     })
-// }
-
-// function sayBye() {
-//     socket.emit('bye', {
-//         who: 'kim',
-//         msg: 'bye..',
-//     })
-
-//     socket.on('otherUser', (data) => {
-//         const chatList = document.querySelector('#chat-list');
-//         const div1 = document.createElement('div');
-//         const div2 = document.createElement('div');
-//         div1.setAttribute("class", 'other-chat');
-//         div2.innerHTML = `${data.who} : ${data.msg}`
-//         div1.append(div2)
-//         chatList.append(div1);
-//     })
-// }
+const logout = () => {
+    axios({
+        method: "POST",
+        url: "/logout",
+        data: true,
+    }).then((res) => {
+        window.location.href = "/";
+    });
+}

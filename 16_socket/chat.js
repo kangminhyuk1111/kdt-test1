@@ -2,10 +2,18 @@ const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+
 const conn = require('../16_socket/model/User');
-const PORT = 8000;
+
 const multer = require('multer');
 const path = require('path');
+
+const session = require('express-session');
+const dotenv = require('dotenv');
+const PORT = 8000;
+
+dotenv.config();
+console.log(process.env.SECRET_KEY);
 
 const uploadDetail = multer({
     storage: multer.diskStorage({
@@ -35,8 +43,15 @@ app.use('/static', express.static(__dirname + '/static'));
 app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use(express.urlencoded({ extends: true })) // post요청으로 들어오는 모든 형식의 데이터를 파싱
 app.use(express.json()); // json 형태로 데이터를 주고 받음
+app.use(session({
+    secret: process.env.SECRET_KEY,
+    resave: false,
+    saveUninitialized: false,
+}))
 
-let userInfo;
+// 모든 유저의 데이터
+let userInfo = {
+};
 
 app.get('/', function (req, res) {
     const sql = `SELECT * FROM socket_user`;
@@ -44,7 +59,10 @@ app.get('/', function (req, res) {
         if (err) throw err;
         userInfo = rows;
     })
-    res.render('chat', userInfo);
+    res.render('chat', {
+        userInfo: userInfo,
+        userid: req.session.userid,
+    });
 });
 
 app.get('/signup', function (req, res) {
@@ -59,19 +77,64 @@ app.post('/', (req, res) => {
     })
 })
 
-app.post('/dynamicFile', uploadDetail.single('dynamic-userfile'), (req, res) => {
+app.post('/signup/registerUser', (req, res) => {
+    const sql = `INSERT INTO socket_user (userid,userpw,nickname,profileImg) VALUES ('${req.body.signId}','${req.body.signPw}','${req.body.signNickname}','${req.body.signProfileImg}');`;
+
+    req.session.destroy((err) => {
+        if (err) throw err;
+    })
+
+    conn.query(sql, (err, rows) => {
+        if (err) throw err;
+        res.send('회원가입 완료 !')
+    })
+})
+
+app.post('/signup/dynamicFile', uploadDetail.single('dynamic-userfile'), (req, res) => {
     console.log(req.file); // 요청의 파일 정보 확인
     res.send(req.file);
 })
 
-const nickObj = {
+app.post('/login', (req, res) => {
+    const sql = `SELECT * FROM socket_user WHERE userid = '${req.body.userId}' AND userpw = '${req.body.userPw}';`;
+    conn.query(sql, (err, rows) => {
+        if (err) {
+            throw err;
+        }
+        else if (rows.length > 0) {
+            req.session.userid = req.body.userId;
+            req.session.userpw = req.body.userPw;
+            res.send(true)
+        } else {
+            res.send(false)
+        }
+    })
+})
 
-};
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) throw err;
+    })
+
+    res.end();
+})
+
+app.post('/modifyProfile', (req, res) => {
+    const sql = `UPDATE socket_user SET userid = '${req.body.userid}', userpw='${req.body.userpw}', nickname='${req.body.nickname}' where userid='${req.body.defaultId}';`;
+    conn.query(sql, (err, rows) => {
+        if (err) throw err;
+        res.send(true);
+    })
+})
+
+
+let nickObj = userInfo;
 // io.on(event_name, callback)
 // : socket과 관련된 통신 작업 처리
 const updateNickList = () => {
     io.emit('updateNicks', nickObj);
 }
+
 
 io.on('connection', (socket) => {
     // "connection" event
@@ -112,7 +175,6 @@ io.on('connection', (socket) => {
             io.to(socket.id).emit('secretMsg', sendObj)
             io.to(msg[1]).emit('secretMsg', sendObj)
         }
-
     })
 
     socket.on('disconnect', () => {
