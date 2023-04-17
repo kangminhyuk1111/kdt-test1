@@ -10,7 +10,7 @@ const path = require('path');
 
 const session = require('express-session');
 const dotenv = require('dotenv');
-const PORT = 8000;
+const PORT = 8001;
 
 dotenv.config();
 console.log(process.env.SECRET_KEY);

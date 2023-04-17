@@ -58,7 +58,7 @@
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon2">PW</span>
               <input
-                type="text"
+                type="password"
                 class="form-control"
                 placeholder="비밀번호 입력"
                 aria-label="Recipient's username"
@@ -157,6 +157,9 @@
           </div>
           <div class="modal-body">
             <form>
+              <div class="mb-3 mb-3-div">
+                <img src="/uploads/shiba-default.jpg" id="modalUserImg"/>
+              </div>
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">닉네임</label>
                 <input type="text" class="form-control" id="modalUserNick">
@@ -181,6 +184,53 @@
     <!-- 채팅창 입장 안내 문구 socket.id -> nickname -->
 
     <script>
+
+
+      const openModal = () => {
+          Swal.fire({
+          title: '익명으로 로그인없이 채팅 가능합니다!',
+          showDenyButton: true,
+          confirmButtonText: '네!',
+          denyButtonText: `오늘 하루 그만보기`,
+        }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+            return ;
+          } else if (result.isDenied) {
+            setCookie("mycookie", 'popupEnd', 1);
+            Swal.fire('비속어 금지~', '', 'success')
+          }
+        })
+      }
+
+      let checkCookie = getCookie("mycookie");
+
+      if(checkCookie == 'popupEnd') {
+        console.log('illegal')
+      } else {
+        openModal();
+      }
+      function setCookie(name, value, expiredays){
+          var today = new Date();
+          today.setDate(today.getDate() + expiredays);
+          document.cookie = name + '=' + escape(value) + '; expires=' + today.toGMTString();
+      }
+
+      function getCookie(name) {
+          var cookie = document.cookie;
+          if (document.cookie != "") {
+              var cookie_array = cookie.split("; ");
+              for ( var index in cookie_array) {
+                  var cookie_name = cookie_array[index].split("=");
+                  if (cookie_name[0] == "mycookie") {
+                      return cookie_name[1];
+                  }
+              }
+          }
+          return;
+      }
+
+      
       let allUsers = '<%- JSON.stringify(userInfo) %>';
       allUsers = (JSON.parse(allUsers));
       const col3 = document.querySelector('.col-3');
@@ -211,10 +261,12 @@
         </div>`;
       loginDiv.innerHTML = localUserProfile
 
+      const modalImg = document.querySelector('#modalUserImg')
       const modalNick = document.querySelector('#modalUserNick');
       const modalId = document.querySelector('#modalUserId');
       const modalPw = document.querySelector('#modalUserPw');
 
+      modalImg.setAttribute('src',localUserFinder.profileImg);
       modalNick.setAttribute('value',localUserFinder.nickname)
       modalId.setAttribute('value',localUserFinder.userid)
       modalPw.setAttribute('value',localUserFinder.userpw)
