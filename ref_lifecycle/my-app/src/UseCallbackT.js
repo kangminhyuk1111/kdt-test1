@@ -20,3 +20,14 @@ export default function UseCallbackT() {
         </div>
     )
 }
+
+// useCallback vs useMemo
+
+// useCallback : useMemo 를 기반으로 만든 hook
+// 단, "함수를 사용할 때" 편의성을 증진시킨 hook
+
+// 공통점 : 성능최적화
+// useMemo : "값"을 재사용
+// => 값의 재사용을 위해 전달된 함수를 실행하고 결과를 메모이제이션
+// useCallback : "함수"를 재사용
+// => 함수의 재사용을 위해 전달된 함수 자체를 메모이제이션
