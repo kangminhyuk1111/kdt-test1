@@ -1,0 +1,36 @@
+@import "./_utils.scss";
+@import "~include-media/dist/include-media";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.img-test {
+  display: flex;
+  .imgs {
+    @include box(20%);
+    border: 3px solid black;
+    img {
+      @include box(100%);
+    }
+  }
+}
+
+@include media("<#{$breakpoint-tablet}") {
+  .img-test {
+    flex-wrap: wrap;
+    .imgs {
+      @include box(30%);
+    }
+  }
+}
+
+@include media("<#{$breakpoint-phone}") {
+  .img-test {
+    flex-wrap: wrap;
+    .imgs {
+      @include box(100%);
+    }
+  }
+}

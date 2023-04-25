@@ -1,0 +1,65 @@
+@import "./_utils.scss";
+@import "~include-media/dist/include-media";
+// scss주석
+
+// 특징3 $ 변수 선언
+
+// 특징1 : 중첩가능
+// 요소간 부모 자식 표현이 쉬움
+
+.SassComponent {
+  margin-top: 30px;
+  display: flex;
+  background-color: rgb(204, 204, 204);
+
+  .box {
+    @include box(100px);
+    border: 1px solid black;
+
+    &:hover {
+      $box-animation: $animation-duration * 2;
+      cursor: pointer;
+      transform: translateY(-20px);
+      transition: transform $box-animation;
+    }
+
+    // 특징2 & 연산자 사용
+    // 부모 선택자를 참조하여 치환
+    &.red {
+      background-color: $color-red;
+    }
+    &.orange {
+      background-color: $color-orange;
+    }
+    &.yellow {
+      background-color: $color-yellow;
+    }
+    &.green {
+      background-color: $color-green;
+    }
+    &.blue {
+      background-color: $color-blue;
+    }
+    &.navy {
+      background-color: $color-navy;
+    }
+    &.purple {
+      background-color: $color-purple;
+    }
+    &.indigo {
+      background-color: $color-indigo;
+    }
+  }
+}
+
+// @media screen and (max-width: #{$breakpoint-tablet}) {
+//   .SassComponent {
+//     flex-direction: column;
+//   }
+// }
+
+@include media("<#{$breakpoint-tablet}") {
+  .SassComponent {
+    flex-direction: column;
+  }
+}

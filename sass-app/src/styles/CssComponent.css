@@ -1,0 +1,40 @@
+.CssComponent {
+    display: flex;
+}
+
+.CssComponent .box {
+    width: 100px;
+    height: 100px;
+}
+
+.CssComponent .red {
+    background-color: red;
+}
+
+.CssComponent .yellow {
+    background-color: yellow;
+}
+
+.CssComponent .orange {
+    background-color: orange;
+}
+
+.CssComponent .green {
+    background-color: green;
+}
+
+.CssComponent .blue {
+    background-color: blue;
+}
+
+.CssComponent .purple {
+    background-color: purple;
+}
+
+.CssComponent .indigo {
+    background-color: indigo;
+}
+
+.CssComponent .navy {
+    background-color: navy;
+}

@@ -1,0 +1,48 @@
+@import "./_utils.scss";
+
+@mixin animation-mixin($name, $px) {
+  animation: #{$name} 2s infinite;
+  @keyframes #{$name} {
+    0% {
+      margin: 0;
+    }
+    25% {
+      margin-left: $px;
+      margin-top: 0;
+    }
+    50% {
+      margin-left: $px;
+      margin-top: $px;
+    }
+    75% {
+      margin-left: 0;
+      margin-top: $px;
+    }
+    100% {
+      margin: 0;
+    }
+  }
+}
+
+.c-body {
+  display: flex;
+  flex-direction: column;
+  .circle {
+    @include box(50px);
+    border-radius: 50%;
+    margin: 5px;
+
+    &.pink {
+      background-color: $color-red;
+      @include animation-mixin(ani1, 50px);
+    }
+    &.yellow {
+      background-color: $color-blue;
+      @include animation-mixin(ani2, 100px);
+    }
+    &.green {
+      background-color: $color-green;
+      @include animation-mixin(ani3, 150px);
+    }
+  }
+}

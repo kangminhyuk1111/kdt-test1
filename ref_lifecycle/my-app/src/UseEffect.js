@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Loading from './Loading';
+import './useEffect.scss';
 
 export default function UseEffect() {
     const [postList, setPostList] = useState([]);
