@@ -8,26 +8,32 @@ exports.getTodos = async (req, res) => {
 exports.createTodo = async (req, res) => {
     const result = await models.Todo.create({
         title: req.body.title,
-        done: req.body.done,
+        done: 0,
     })
     res.send(result);
 }
 
 exports.patchTodo = async (req, res) => {
+    console.log(req.body)
     await models.Todo.update({
-        title: 'test'
+        title: req.body.title
     }, {
         where: {
-            id: 1
+            id: req.body.id
         }
     })
-    res.send(true);
+    const result = await models.Todo.findOne({
+        where: {
+            id: req.body.id
+        }
+    })
+    res.send(result);
 }
 
 exports.deleteTodo = async (req, res) => {
     await models.Todo.destroy({
         where: {
-            id: 1
+            id: req.body.id
         }
     })
     res.send(true);

@@ -1,0 +1,80 @@
+@import "./utils.scss";
+
+.main {
+  input {
+    min-width: 300px;
+    width: 60%;
+    height: 32px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    padding-left: 10px;
+    margin: 10px;
+    background-color: rgb(233, 233, 233);
+  }
+
+  .input-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid gray;
+  }
+
+  button {
+    margin: 10px;
+    padding: 0.5rem;
+
+    background-color: #28a745;
+    color: #ffffff;
+
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 0.6rem;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+
+    border: none;
+    border-radius: 4px;
+
+    display: inline-block;
+    width: 10%;
+
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+    cursor: pointer;
+
+    transition: 0.5s;
+    &:hover {
+      background-color: #218838;
+    }
+  }
+
+  ul {
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    li {
+      min-width: 300px;
+      height: 3rem;
+      width: 80%;
+      background-color: beige;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin: 2px;
+      font-size: 1.2rem;
+      line-height: 3rem;
+      padding: 0.5rem;
+      border-radius: 1rem;
+      .li-p {
+        width: 60%;
+        background-color: $primary-color;
+        text-align: center;
+      }
+    }
+  }
+}
