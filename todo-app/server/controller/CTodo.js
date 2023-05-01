@@ -1,7 +1,9 @@
 const models = require('../models')
 
 exports.getTodos = async (req, res) => {
-    const result = await models.Todo.findAll();
+    const result = await models.Todo.findAll({
+        order: [['id', 'DESC']]
+    });
     res.send(result);
 }
 

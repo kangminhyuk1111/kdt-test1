@@ -24,7 +24,7 @@ export default function Main() {
                 title: todoInput
             }
         }).then((res) => setTodoList(todoList.concat(res.data)))
-        setTodoInput('');
+        setTodoInput('..');
     }
 
     const patchTodo = (data) => {
@@ -92,9 +92,8 @@ export default function Main() {
                     {!todoList.length ? "빈값" : todoList.map((data, idx) => {
                         return (
                             <li key={idx}>
-                                {/* <input className='check-box' type='checkbox' onChange={todoInputChange} value={data.done} /> */}
+                                {/* <input className='check-box' type='checkbox' value={data.done} /> */}
                                 <p className='li-p'>{data.title}</p>
-                                <button onClick={() => { '' }}>{data.done ? "끝" : "아직"}</button>
                                 <button onClick={() => patchTodo(data)}>수정</button>
                                 <button onClick={() => deleteTodo(data.id)}>삭제</button>
                             </li>
