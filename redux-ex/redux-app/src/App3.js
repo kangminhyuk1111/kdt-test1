@@ -6,11 +6,11 @@ function App2() {
     // : redux store의 state를 조회
     // 인자로 콜백함수
     // 콜백함수의 매개변수로 state를 받을 수 있음
-    const number = useSelector((state) => state.number)
-    const isData = useSelector((state) => s)
+    const number = useSelector((state) => state.counter.number)
     return (
         <div className="App">
             number : {number}
+
             <Box1 />
         </div>
     );
@@ -35,15 +35,17 @@ const Box2 = ({ }) => {
 };
 
 const Box3 = () => {
-    const number = useSelector((state) => state.number)
-
+    const number = useSelector((state) => state.counter.number)
+    const isData = useSelector((state) => state.isData)
     const dispatch = useDispatch();
 
     return (
         <div className="Box">
             <h2>Box3: {number}</h2>
+            isData : {isData ? '1' : "0"}
             <button onClick={() => dispatch({ type: 'INCREMENT' })}>+</button>
             <button onClick={() => dispatch({ type: 'DECREMENT' })}>-</button>
+            <button onClick={() => dispatch({ type: 'CHANGE' })}>change state</button>
         </div>
     );
 };

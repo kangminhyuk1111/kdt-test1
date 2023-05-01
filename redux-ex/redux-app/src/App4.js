@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { Box1Container, Box2Container, Box3Container } from './containers/BoxesContainers';
 import './styles/Box.css';
 
 function App2() {
@@ -6,44 +7,39 @@ function App2() {
     // : redux store의 state를 조회
     // 인자로 콜백함수
     // 콜백함수의 매개변수로 state를 받을 수 있음
-    const number = useSelector((state) => state.number)
-    const isData = useSelector((state) => s)
     return (
         <div className="App">
-            number : {number}
-            <Box1 />
+            number
+            <Box1Container />
         </div>
     );
 }
 
-const Box1 = ({ }) => {
+export const Box1 = ({ }) => {
     return (
         <div className="Box">
             <h2>Box1: </h2>
-            <Box2 />
+            <Box2Container />
         </div>
     );
 };
 
-const Box2 = ({ }) => {
+export const Box2 = ({ }) => {
     return (
         <div className="Box">
             <h2>Box2: </h2>
-            <Box3 />
+            <Box3Container />
         </div>
     );
 };
 
-const Box3 = () => {
-    const number = useSelector((state) => state.number)
-
-    const dispatch = useDispatch();
-
+export const Box3 = ({ number, onIncrease, onDecrease }) => {
     return (
         <div className="Box">
-            <h2>Box3: {number}</h2>
-            <button onClick={() => dispatch({ type: 'INCREMENT' })}>+</button>
-            <button onClick={() => dispatch({ type: 'DECREMENT' })}>-</button>
+            <h2>Box3 : {number}</h2>
+            <button onClick={onIncrease} >+</button>
+            <button onClick={onDecrease}>-</button>
+            <button>change state</button>
         </div>
     );
 };
